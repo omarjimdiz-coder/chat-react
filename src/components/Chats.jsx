@@ -16,7 +16,7 @@ export const Chats = () => {
                         chats.map(chat => (
                             <li 
                                 key={chat.id}
-                                className="py-3 sm:py-4"
+                                className="py-3 sm:py-4 cursor-pointer"
                             >
                                 <div className="flex items-center gap-3">
                                     <div className="flex-shrink-0">
@@ -38,7 +38,7 @@ export const Chats = () => {
                                         newMessages?.map(message => (
                                             <div key={message.userId} >
                                             {
-                                                chat.id === message.userId && <div className="p-1 rounded-full text-sm font-semibold text-white bg-cyan-600">
+                                                chat.id === message.userId && <div className="px-2 py-1 text-xs rounded-full font-semibold text-white bg-cyan-600">
                                                     {message.totalUnread}
                                                 </div> 
                                             }
