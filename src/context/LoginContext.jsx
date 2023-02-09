@@ -1,10 +1,13 @@
 import { createContext, useState } from "react";
-import { dataApi } from "../api/dataApi";
+import dataApi from "../api/dataApi";
 import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const LoginContext = createContext();
 
 const LoginProvider = ({children}) => {
+
+    const navigate = useNavigate();
     
     const [values, setValues] = useState({
         email: "",
@@ -38,8 +41,13 @@ const LoginProvider = ({children}) => {
             const res = await dataApi.post('/auth/login', 
             {user: values.email, password: values.password});
 
-            console.log(res);
-            console.log({email: values.email, password: values.password});
+            const { data } = res;
+            // console.log(data);
+            localStorage.setItem('token', data.token);
+            
+            if(data.token){
+                return navigate("/chat");
+            }
 
         }catch(err) {
             const { response } = err;
