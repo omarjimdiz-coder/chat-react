@@ -4,7 +4,6 @@ import ChatsContext from "../context/ChatsContext";
 export const Messenger = ({message}) => {
 
     const {moreMessages} = useContext(ChatsContext);
-
     const mixArrays = [...message, ...moreMessages];
 
   return (

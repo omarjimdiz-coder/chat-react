@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import dataApi from "../api/dataApi";
 
 const ChatsContext = createContext();
@@ -9,6 +10,14 @@ const ChatsProvider = ({children}) => {
     const [newMessages, setNewMessages] = useState([]);
     const [message, setMessage] = useState([]);
     const [moreMessages, setMoreMessages] = useState([]);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(!localStorage.getItem('token')){
+            return navigate("/");
+        }
+    }, []);
 
     useEffect(() => {
         getChats();
