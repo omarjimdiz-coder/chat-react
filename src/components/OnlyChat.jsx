@@ -7,7 +7,7 @@ export const OnlyChat = ({chat}) => {
 
   return (
     <li 
-        onClick={() => getId(chat.id)}
+        onClick={ () => getId(chat.id) }
         className="py-3 sm:py-4 cursor-pointer"
     >
         <div className="flex items-center gap-3">

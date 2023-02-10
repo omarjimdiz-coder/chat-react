@@ -1,12 +1,16 @@
+import { useContext } from "react";
+import ChatsContext from "../context/ChatsContext";
 
 export const Messenger = ({message}) => {
 
-    //console.log(message);
+    const {moreMessages} = useContext(ChatsContext);
+
+    const mixArrays = [...message, ...moreMessages];
 
   return (
         <div className="w-full px-5 overflow-x-auto h-screen">
         {
-            message.map((data, i ) => (
+            mixArrays.map((data, i ) => (
                 <div 
                     key={i}
                     className="mt-1"
