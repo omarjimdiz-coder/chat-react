@@ -7,6 +7,7 @@ const ChatsProvider = ({children}) => {
 
     const [chats, setChats] = useState([]);
     const [newMessages, setNewMessages] = useState([]);
+    const [message, setMessage] = useState([]);
 
     useEffect(() => {
         getChats();
@@ -26,10 +27,6 @@ const ChatsProvider = ({children}) => {
         return () => clearInterval(interval);
     }, []);
 
-    // useEffect(() => {
-    //     compareArrays();
-    // }, [])
-
     const getChats = async() => {
         try{
             const {data} = await dataApi.get('/users/connected');
@@ -48,7 +45,16 @@ const ChatsProvider = ({children}) => {
         }
     }
 
-    const data = { chats, newMessages }
+    const getId = async(id) => {
+		try {
+            const {data} = await dataApi.get(`/messages/${id}`);
+            setMessage(data);
+        } catch (error) {
+            console.log(error);
+        }
+	}
+
+    const data = { chats, newMessages, getId, message }
 
     return(
         <ChatsContext.Provider

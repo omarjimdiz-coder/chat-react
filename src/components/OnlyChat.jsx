@@ -3,10 +3,11 @@ import ChatsContext from "../context/ChatsContext";
 
 export const OnlyChat = ({chat}) => {
 
-    const { newMessages } = useContext(ChatsContext);
+    const { newMessages, getId } = useContext(ChatsContext);
 
   return (
     <li 
+        onClick={() => getId(chat.id)}
         className="py-3 sm:py-4 cursor-pointer"
     >
         <div className="flex items-center gap-3">
