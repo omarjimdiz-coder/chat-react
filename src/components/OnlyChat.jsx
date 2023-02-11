@@ -1,29 +1,35 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import ChatsContext from "../context/ChatsContext";
 
 export const OnlyChat = ({chat}) => {
 
     const { newMessages, getId } = useContext(ChatsContext);
+    const [newText, setNewText] = useState('');
 
-    const regEx = {
-        bold: /[*]+[\s\a-zA-Z0-9]+[*]/,
-        cursiva: /[_]+[\s\a-zA-Z0-9]+[_]/,
-        tachado: /[~]+[\s\a-zA-Z0-9]+[~]/
-    }
+    // const bolder = chat.lastMessage.replace(/[*]+[\s\a-zA-Z0-9]+[*]/, '<p class="font-extrabold">BOLD</p>')
 
-    if(regEx.bold.test(chat.lastMessage)){
-        return <p className="font-bold">BOLDER</p>
-    }
-    if(regEx.cursiva.test(chat.lastMessage)){
-        return <p className="italic">CURSIVA</p>
-    }
-    if(regEx.tachado.test(chat.lastMessage)){
-        return <p className="line-through">TACHADO</p>
-    }
-    
-    //let palabra = "jdsksd jdskdjs *reprehe nderit* jdksds kflfk jfdkdjfk";
+    let palabra = "jdsksd jdskdjs *reprehe nderit* jdksds kflfk jfdkdjfk";
     //Negritas
-    //console.log(/[*]+[\s\a-zA-Z0-9]+[*]/.test(palabra));
+    // console.log(/[*]+[\s\a-zA-Z0-9]+[*]/.test(palabra));
+
+    useEffect(() => {
+        if(/[*]+[\s\a-zA-Z0-9]+[*]/.test(chat.lastMessage)){
+            const getText = /[*]+[\s\a-zA-Z0-9]+[*]/.exec(chat.lastMessage);
+            console.log(getText[0]);
+            setNewText(chat.lastMessage.replace(/[*]+[\s\a-zA-Z0-9]+[*]/, `<span class="font-bold">${getText[0].slice(1, -1)}</span>`));
+        }else if(/[_]+[\s\a-zA-Z0-9]+[_]/.test(chat.lastMessage)){
+            const getText = /[_]+[\s\a-zA-Z0-9]+[_]/.exec(chat.lastMessage);
+            console.log(getText[0]);
+            setNewText(chat.lastMessage.replace(/[_]+[\s\a-zA-Z0-9]+[_]/, `<span class="italic">${getText[0].slice(1, -1)}</span>`));
+        }else if(/[~]+[\s\a-zA-Z0-9]+[~]/.test(chat.lastMessage)){
+            const getText = /[~]+[\s\a-zA-Z0-9]+[~]/.exec(chat.lastMessage);
+            console.log(getText[0]);
+            setNewText(chat.lastMessage.replace(/[~]+[\s\a-zA-Z0-9]+[~]/, `<span class="line-through">${getText[0].slice(1, -1)}</span>`));
+        }else{
+            setNewText(chat.lastMessage);
+        }
+    }, [chat]);
+
 
     //console.log(/[*]+[\s\a-zA-Z0-9]+[*]/.test(chat.lastMessage));
 
@@ -65,9 +71,10 @@ export const OnlyChat = ({chat}) => {
                 <p className="text-sm font-medium text-gray-900 truncate dark:text-white">
                     {chat.name}
                 </p>
-                <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                    {chat.lastMessage} 
-                </p>
+                <p 
+                    className="text-sm text-gray-500 truncate dark:text-gray-400" 
+                    dangerouslySetInnerHTML={{__html: newText}}
+                />
             </div>
             {
                 newMessages?.map(message => (
