@@ -5,6 +5,49 @@ export const OnlyChat = ({chat}) => {
 
     const { newMessages, getId } = useContext(ChatsContext);
 
+    const regEx = {
+        bold: /[*]+[\s\a-zA-Z0-9]+[*]/,
+        cursiva: /[_]+[\s\a-zA-Z0-9]+[_]/,
+        tachado: /[~]+[\s\a-zA-Z0-9]+[~]/
+    }
+
+    if(regEx.bold.test(chat.lastMessage)){
+        return <p className="font-bold">BOLDER</p>
+    }
+    if(regEx.cursiva.test(chat.lastMessage)){
+        return <p className="italic">CURSIVA</p>
+    }
+    if(regEx.tachado.test(chat.lastMessage)){
+        return <p className="line-through">TACHADO</p>
+    }
+    
+    //let palabra = "jdsksd jdskdjs *reprehe nderit* jdksds kflfk jfdkdjfk";
+    //Negritas
+    //console.log(/[*]+[\s\a-zA-Z0-9]+[*]/.test(palabra));
+
+    //console.log(/[*]+[\s\a-zA-Z0-9]+[*]/.test(chat.lastMessage));
+
+
+   // const cambio = chat.lastMessage.replace(/[*]+[\s\a-zA-Z0-9]+[*]/, );
+    
+    //palabra.replace(/[*]+[\s\a-zA-Z0-9]+[*]/, "Cambio");
+
+    //cursiva
+    //console.log(/[_]+[\s\a-zA-Z0-9]+[_]/.test(palabra));
+
+    //tachado
+    //console.log(/[~]+[\s\a-zA-Z0-9]+[~]/.test(palabra));
+
+    //tachado y negritas
+    //console.log(/[*~][~*]+[\s\a-zA-Z0-9]+[~*][*~]/.test(palabra));
+
+    //cursiva y negritas
+    //console.log(/[*_][_*]+[\s\a-zA-Z0-9]+[_*][*_]/.test(palabra));
+
+    //cursiva y tachado
+    //console.log(/[~_][_~]+[\s\a-zA-Z0-9]+[_~][~_]/.test(palabra));
+
+    
   return (
     <li 
         onClick={ () => getId(chat.id) }
@@ -23,7 +66,7 @@ export const OnlyChat = ({chat}) => {
                     {chat.name}
                 </p>
                 <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                    {chat.lastMessage}
+                    {chat.lastMessage} 
                 </p>
             </div>
             {
